@@ -3,8 +3,15 @@ from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
 import time
-import math
+import os
 
+# Get the base path to this folder
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+# Get the highscore 
+with open(THIS_FOLDER + '\highscore.txt') as file:
+    highscore = file.read()
+
+# Set screen parameters
 SCREEN_SIZE = 600
 screen = Screen()
 screen.setup(width=SCREEN_SIZE, height=SCREEN_SIZE)
@@ -17,6 +24,7 @@ initial_snake_size = 3
 game_speed = 1
 
 scoreboard = Scoreboard(SCREEN_SIZE)
+scoreboard.update(highscore)
 snake = Snake(initial_snake_size)
 food = Food(SCREEN_SIZE)
 
@@ -36,10 +44,14 @@ while snake.alive:
     if snake.CheckCollision(food.pos()):
         snake.eat() # Increase snake size by 1
         food.move() # Move the food to a new location
-        scoreboard.update() # Update the score
+        scoreboard.update(highscore) # Update the score
 
 # When game is finished, write Game Over on the screen        
 scoreboard.gameover() 
+# Write the new highscore
+if scoreboard.score > int(highscore):
+    with open(THIS_FOLDER + '\highscore.txt', mode='w') as file:
+        file.write(str(scoreboard.score))
 screen.update()
 
 screen.exitonclick()

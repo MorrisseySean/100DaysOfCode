@@ -8,12 +8,15 @@ class Scoreboard(Turtle):
         self.pencolor('white')
         self.hideturtle()
         self.score = -1
-        self.update()
+        self.update(0)
    
-    def update(self):
+    def update(self, highscore):
         self.clear()
         self.score += 1
-        self.write(f"Score: {self.score}", False, 'center', ('Arial', self.fontsize, 'bold'))
+        high = highscore
+        if self.score > int(high):
+            high = self.score
+        self.write(f"Score: {self.score}    Highscore: {high}", False, 'center', ('Arial', self.fontsize, 'bold'))
 
     def gameover(self):
         self.penup()
