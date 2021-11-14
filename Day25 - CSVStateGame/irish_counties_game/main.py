@@ -35,17 +35,15 @@ while len(correct_answers) < len(county_list) and game_loop == True:
     answer = turtle.textinput("Guess a County", "What's the name of an Irish county?(As Béarla)")
     if answer == 'quit':
         game_loop = False
-    elif county_list.__contains__(answer) and not correct_answers.__contains__(answer):
+    elif answer in county_list and not answer in correct_answers:
         correct_answers.append(answer)
         answer_county = data[data.county == answer]
         pos = (float(answer_county['x']), float(answer_county['y']))
         write_answer(t, answer_county.irish_name, pos)
 
 if len(correct_answers) < len(county_list):
-    for county in county_list:
-        if correct_answers.__contains__(county):
-            county_list.remove(county)
-    output = pandas.DataFrame(county_list)    
+    review_list = [county for county in county_list if not county in correct_answers]
+    output = pandas.DataFrame(review_list)    
     output.to_csv(THIS_FOLDER + '/revision_list.csv')
 screen.exitonclick()
 
