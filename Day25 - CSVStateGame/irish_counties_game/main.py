@@ -1,7 +1,18 @@
-import turtle, os, pandas
+import turtle, os, pandas, sys
 # Get the base path to this folder
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 FONT = ['Calibri', 'normal', 20]
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
+
+map = resource_path("blank_ire_map.gif")
 
 def write_answer(turtle, answer, pos):
     turtle.penup()
@@ -14,9 +25,8 @@ def write_answer(turtle, answer, pos):
 
 screen = turtle.Screen()
 screen.title("Irish Counties Game")
-image = THIS_FOLDER + '/blank_ire_map.gif'
-screen.addshape(image)
-turtle.shape(image)
+screen.addshape(map)
+turtle.shape(map)
 
 t = turtle.Turtle(visible=False)
 t.penup()
