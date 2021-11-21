@@ -20,7 +20,8 @@ except FileNotFoundError:
     data = pandas.read_csv(THIS_FOLDER + '/data/chinese_eng.csv')
 finally: 
     chinese_dict = data.to_dict(orient='records')
-    current_card = random.choice(chinese_dict)
+    word_list = chinese_dict[:50]
+    current_card = random.choice(word_list)
 
 # --- Generate New Card --- #
 def new_card():
@@ -29,7 +30,7 @@ def new_card():
     canvas.itemconfig(card_image, image=card_images[counter%2])
     if counter%2 == 0:
         # Choose a random card
-        current_card = random.choice(chinese_dict)    
+        current_card = random.choice(word_list)    
         canvas.itemconfig(language_text, text='Chinese', fill=FONT_COLORS[counter%2])
         canvas.itemconfig(word_text, text=current_card["Chinese Char"], fill=FONT_COLORS[counter%2])
         canvas.itemconfig(pinyin_text, text='', fill=FONT_COLORS[counter%2])
