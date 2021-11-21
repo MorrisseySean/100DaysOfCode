@@ -62,7 +62,7 @@ def read_data():
     title = 'Error'
     # Validation presence check for input 
     if len(search_term) == 0:
-        messagebox.showwarning('Warning', 'No website entered.')
+        messagebox.showwarning('Warning', 'Please enter a website name.')
     else:
         try:
             # Open file and read data to dictionary 'data'
@@ -72,18 +72,17 @@ def read_data():
             # If no file found, output error message
             output = 'No information found in database!'
         else:
-            try:
+            if search_term in data:
                 # Search for information of search term in dictionary
                 password = data[search_term]['password']
                 username = data[search_term]['username']
-            except KeyError:
-                # If no information found in dictionary, output error message
-                output = f'{search_term} not found in database!'
-            else:
                 # If information found, copy password and output information
                 pyperclip.copy(password)
                 title = 'Your Information'
                 output = f'Website: {search_term}\nUsername: {username}\nPassword: {password}\nPassword copied to clipboard!'
+            else:
+                # If no information found in dictionary, output error message
+                output = f'{search_term} not found in database!'                
         finally: 
             # Show the message to the user
             messagebox.showinfo(title, output)
