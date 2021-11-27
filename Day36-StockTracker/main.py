@@ -33,15 +33,13 @@ def send_notification(subject, message, recepient):
 
 alpha_endpoint = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK}&outputsize=compact&apikey={alpha_key}"
 response = requests.get(alpha_endpoint)
-data = response.json()
-daily_data = data['Time Series (Daily)']
-count = 0
+data = response.json()['Time Series (Daily)']
+daily_data = [value for (date, value) in data.items()]
 tracked = []
 # Grab the close values for the past 2 days
-for day in daily_data:
-    if count < 2:
-        tracked.append(float(daily_data[day]['4. close']))
-        count += 1
+for day in daily_data[:2]:
+    tracked.append(float(day['4. close']))
+        
 # Get the percentage difference between the two values
 difference = ((tracked[0] - tracked[1]) / tracked[1] ) * 100
 # If the difference is greater than 5%, grab the 3 news articles and email them
