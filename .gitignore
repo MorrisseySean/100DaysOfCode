@@ -958,3 +958,6 @@ Day32 - BirthdayWisher/MotivationalQuotes/data.py
 Day32 - BirthdayWisher/data.py
 Day35-WeatherSMS/data.py
 Day36-StockTracker/data.py
+.vscode/launch.json
+.env
+Day38 - Workout Tracker/__pycache__/data.cpython-39.pyc
