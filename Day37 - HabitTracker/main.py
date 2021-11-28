@@ -9,6 +9,9 @@ headers = {
 }
 
 def create_graph(name:str, unit:str, type:str, color:str):
+    """
+    Create a new pixela graph with the given parameters
+    """
     # Format name to fit id parameters
     id = str.replace(name, " ", "-").lower()
     id = re.sub("[^a-z0-9-]+", "", id)
@@ -30,6 +33,7 @@ def create_graph(name:str, unit:str, type:str, color:str):
         print(response.text)
 
 def post_pixel(graph_id:str, quantity:str):
+    "Place a pixel at todays date on the pixela graph with id: graph_id"
     today = time.strftime('%Y%m%d')
     pixel_config = {
         "date": today,
@@ -42,6 +46,9 @@ def post_pixel(graph_id:str, quantity:str):
         print(f"Successfully posted pixel to graph id: {graph_id}")
     
 def parse_response(response_text):
+    """
+    Parses the json reponse text from pixela
+    """
     true = True
     false = False
     message = eval(response_text)
